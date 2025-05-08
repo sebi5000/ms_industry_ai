@@ -1,11 +1,22 @@
 package main
 
 import (
+	"context"
+	"flag"
 	"github.com/mark3labs/mcp-go/server"
 	"ms_salespower_mcp/usecases"
+	"os"
 )
 
 func main() {
+
+	var transport, baseURL, port string
+
+	//MCP Server flags
+	flag.StringVar(&transport, "transport", "stdio", "Transport to use (STDIO or SSE)")
+	flag.StringVar(&baseURL, "baseURL", "http//:localhost", "Base URL")
+	flag.StringVar(&port, "port", "3001", "Port")
+
 	mcpServer := server.NewMCPServer(
 		"ms_salespower",
 		"0.0.1",
@@ -22,13 +33,21 @@ func main() {
 	addVisitToSalesforceTool, addVisitToSalesforceHandler := usecases.NewAddVisitReportToSalesforceTool()
 	mcpServer.AddTool(addVisitToSalesforceTool, addVisitToSalesforceHandler)
 
-	//STANDARD IN OUT FOR LOCAL MCP
-	//s := server.NewStdioServer(mcpServer)
-	//err := s.Listen(context.Background(), os.Stdin, os.Stdout)
+	//Start Server in SSE Mode
+	if transport == "sse" {
+		sseServer := server.NewSSEServer(mcpServer, server.WithBaseURL(baseURL))
+		err := sseServer.Start(":" + port)
 
-	sseServer := server.NewSSEServer(mcpServer, server.WithBaseURL("http://localhost"))
+		if err != nil {
+			panic(err)
+		}
 
-	if err := sseServer.Start(":3001"); err != nil {
-		panic(err)
+	} else { //Start Server in STDIO Mode
+		s := server.NewStdioServer(mcpServer)
+		err := s.Listen(context.Background(), os.Stdin, os.Stdout)
+
+		if err != nil {
+			panic(err)
+		}
 	}
 }
