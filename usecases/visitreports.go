@@ -6,14 +6,6 @@ import (
 	"github.com/mark3labs/mcp-go/server"
 )
 
-/*
-Visit Reports are used to document the work auf field sales employees. If a sales representative is on-site
-or remote talking to a customer, this should be tracked within the CRM-System.
-
-EXAMPLE:
-Ich war mit Maximilian Benning bei unserem Kunden Bruker vor Ort. Vom Kunden war Hr. Meyer (Einkauf)  und Fr. Wolters (Vertrieb) mit dabei. Wir haben die Planung für 2026 besprochen und erkannt, dass wir neue Möglichkeiten der Zusammenarbeit sehen. Speziell der Vertrieb unserer XT 1000 wird hier relevant, da Bruker damit kostengünstiger fertigen kann. Ziel für 2026 ist der Verkauf von 3 Einheiten. Kalkulation und Angebote schickt Max an Hr. Meyer bis in 14 Tagen.
-*/
-
 // PROMPT Templates for Visit Reports
 
 // NewFormatVisitReportPrompt provides the prompt and handler function to format a visit report

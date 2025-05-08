@@ -1,10 +1,8 @@
 package main
 
 import (
-	"context"
 	"github.com/mark3labs/mcp-go/server"
 	"ms_salespower_mcp/usecases"
-	"os"
 )
 
 func main() {
@@ -24,10 +22,13 @@ func main() {
 	addVisitToSalesforceTool, addVisitToSalesforceHandler := usecases.NewAddVisitReportToSalesforceTool()
 	mcpServer.AddTool(addVisitToSalesforceTool, addVisitToSalesforceHandler)
 
-	s := server.NewStdioServer(mcpServer)
-	err := s.Listen(context.Background(), os.Stdin, os.Stdout)
+	//STANDARD IN OUT FOR LOCAL MCP
+	//s := server.NewStdioServer(mcpServer)
+	//err := s.Listen(context.Background(), os.Stdin, os.Stdout)
 
-	if err != nil {
+	sseServer := server.NewSSEServer(mcpServer, server.WithBaseURL("http://localhost"))
+
+	if err := sseServer.Start(":3001"); err != nil {
 		panic(err)
 	}
 }
