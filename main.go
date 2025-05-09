@@ -4,7 +4,7 @@ import (
 	"context"
 	"flag"
 	"github.com/mark3labs/mcp-go/server"
-	"ms_salespower_mcp/usecases"
+	"ms_salespower_mcp/usecases/sales"
 	"os"
 )
 
@@ -18,7 +18,7 @@ func main() {
 	flag.StringVar(&port, "port", "3001", "Port")
 
 	mcpServer := server.NewMCPServer(
-		"ms_salespower",
+		"ms_industry_ai",
 		"0.0.1",
 		server.WithResourceCapabilities(true, true),
 		server.WithLogging(),
@@ -26,11 +26,11 @@ func main() {
 	)
 
 	//Add Prompts which should be active
-	visitReportPrompt, visitReportHandler := usecases.NewFormatVisitReportPrompt()
+	visitReportPrompt, visitReportHandler := sales.NewFormatVisitReportPrompt()
 	mcpServer.AddPrompt(visitReportPrompt, visitReportHandler)
 
 	//Add Tools which should be active
-	addVisitToSalesforceTool, addVisitToSalesforceHandler := usecases.NewAddVisitReportToSalesforceTool()
+	addVisitToSalesforceTool, addVisitToSalesforceHandler := sales.NewAddVisitReportToSalesforceTool()
 	mcpServer.AddTool(addVisitToSalesforceTool, addVisitToSalesforceHandler)
 
 	//Start Server in SSE Mode
