@@ -40,7 +40,7 @@ func NewGetContingentTool() (mcp.Tool, server.ToolHandlerFunc) {
 				mcp.Required(),
 				mcp.Description("The type of absence e.g. holiday")),
 		),
-		addAbsenceToHRToolHandler
+		getContingentHandler
 }
 
 func getContingentHandler(ctx context.Context, request mcp.CallToolRequest) (*mcp.CallToolResult, error) {
