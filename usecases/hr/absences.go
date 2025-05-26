@@ -29,5 +29,6 @@ func addAbsenceToHRToolHandler(ctx context.Context, request mcp.CallToolRequest)
 	absenceType := request.Params.Arguments["absence_type"]
 	begin := request.Params.Arguments["begin"]
 	end := request.Params.Arguments["end"]
-	return mcp.NewToolResultText(fmt.Sprintf("Die Abwesenheit %s vom: %s bis zum: %s wurde erfolgreich hinzugefügt", absenceType, begin, end)), nil
+
+	return mcp.NewToolResultText(fmt.Sprintf("The absence %s from: %s to: %s is successfully added", absenceType, begin, end)), nil
 }
