@@ -33,6 +33,9 @@ func main() {
 	addVisitToSalesforceTool, addVisitToSalesforceHandler := sales.NewAddVisitReportToSalesforceTool()
 	mcpServer.AddTool(addVisitToSalesforceTool, addVisitToSalesforceHandler)
 
+	orderEntryTool, addOrderEntryHandler := sales.NewOrderEntryTool()
+	mcpServer.AddTool(orderEntryTool, addOrderEntryHandler)
+
 	//Start Server in SSE Mode
 	if transport == "sse" {
 		sseServer := server.NewSSEServer(mcpServer, server.WithBaseURL(baseURL))
