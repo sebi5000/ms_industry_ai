@@ -4,7 +4,6 @@ import (
 	"context"
 	"flag"
 	"github.com/mark3labs/mcp-go/server"
-	"ms_salespower_mcp/usecases/hr"
 	"ms_salespower_mcp/usecases/sales"
 	"os"
 )
@@ -33,12 +32,6 @@ func main() {
 	//Add Tools which should be active
 	addVisitToSalesforceTool, addVisitToSalesforceHandler := sales.NewAddVisitReportToSalesforceTool()
 	mcpServer.AddTool(addVisitToSalesforceTool, addVisitToSalesforceHandler)
-
-	orderEntryTool, addOrderEntryToolHandler := sales.NewOrderEntryTool()
-	mcpServer.AddTool(orderEntryTool, addOrderEntryToolHandler)
-
-	addAbsenceToHRTool, addAbsenceToHRToolHandler := hr.NewAddAbsenceToHRTool()
-	mcpServer.AddTool(addAbsenceToHRTool, addAbsenceToHRToolHandler)
 
 	//Start Server in SSE Mode
 	if transport == "sse" {
